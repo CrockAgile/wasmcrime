@@ -1,0 +1,17 @@
+[package]
+name = "wasmcrime"
+version = "0.1.0"
+authors = ["Jeffrey Crocker <crockagile@gmail.com>"]
+edition = "2021"
+readme = "README.md"
+license = "Apache-2.0"
+keywords = ["wasm"]
+categories = ["wasm"]
+description = "learn about wasm, cranelift, jit, and more by committing wasm crimes"
+repository = "https://github.com/CrockAgile/wasmcrime"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[dev-dependencies]
