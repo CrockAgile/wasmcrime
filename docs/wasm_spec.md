@@ -66,4 +66,49 @@ Host environment gotta run all this!
 * instantiate
 * invoke
 
+## Structure
+
+[(reference)][structure]
+
+### Number Types
+
+`numtype ::= i32 | i64 | f32 | f64`
+
+`vectype ::= v128`
+
+### Reference Types
+
+References, either function or external, reference objects in the runtime "store"
+
+`reftype ::= funcref | externref`
+
+function references are the *infinite* union of all references to functions
+
+external references are the *infinite* union of all objects owned by the "embedder" runtime
+
+reference types are *opaque*, meaning neither size nor bit pattern can be observed
+
+reference types can be stored in "tables"
+
+### Value Types
+
+`valtype ::= numtype | vectype | reftype`
+
+### Result Types
+
+`resulttype ::= [vec(valtype)]`
+
+### Function Types
+
+`functype ::= resulttype -> resulttype`
+
+### Global Types
+
+`globaltype ::= (const | var) valtype`
+
+### External Types
+
+`externtype ::= func functype | table tabletype | mem memtype | global globaltype`
+
 [overview]: https://webassembly.github.io/spec/core/intro/overview.html
+[structure]: https://webassembly.github.io/spec/core/syntax/index.html
