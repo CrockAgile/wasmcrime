@@ -16,7 +16,7 @@ values can also be **opaque references**, pointers toward different types of ent
 
 references cannot have their size or representation observed
 
-### Instructions
+### Architecture
 
 * stack machine
 * control flow is structured
@@ -110,5 +110,71 @@ reference types can be stored in "tables"
 
 `externtype ::= func functype | table tabletype | mem memtype | global globaltype`
 
+## Instructions
+
+[(reference)][instructions]
+
+* clz, ctz, popcnt
+* add, sub, mul, div, rem, and, or, xor, shl, shr, rotl, rotr
+* abs, neg, sqrt, ceil, floor, trunc, nearest
+* add, sub, mul, div, min, max, copysign
+* eqz, eq, ne, lt, gt, le, ge
+* const, extend, promote, wrap, reinterpret
+
+also a lot of SIMD vector instructions
+
+* const, shuffle, sqizzle, splat, ...
+
+### References
+
+null, is_null, or get function reference
+
+### Parametric
+
+`drop` throws away a single operand
+
+`select` gets one of its first two operands bases on if third is zero
+
+### Variable
+
+local get,set,tee
+
+global get,set
+
+### Table
+
+get, set, grow, fill, copy, init, drop
+
+### Memory
+
+load, store, size, grow, fill, copy, init, drop
+
+### Control
+
+`blocktype ::= typeidx | valtype`
+
+* `nop` does nothing
+* `unreachable` causes a trap
+* `block`, `loop`, `if` structure nested sequences of instructions called "blocks"
+
+label 0 is the "innermost" control instruction, increasing outward
+
+branches can only be directed outward
+
+`block` and `if` jump *forward* to the current control instruction `end`
+`loop` jumps *backward* to the current control instruction's start
+
+* `br` unconditional branch
+* `br_if` conditional branch
+* `br_table` indirect branch via parameter index table
+
+branches can consume arguments, which are pushed back onto stack after unwinding
+
+* `call` invokes another function, consuming stack arguments
+* `call_indirect` invokes another function via parameter index table
+
+because the `funcref` table can have varying function types, the callee is dynamically checked against the indexed function type, and may trap
+
 [overview]: https://webassembly.github.io/spec/core/intro/overview.html
 [structure]: https://webassembly.github.io/spec/core/syntax/index.html
+[instructions]: https://webassembly.github.io/spec/core/syntax/instructions.html
