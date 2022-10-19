@@ -37,7 +37,7 @@ jobs:
     needs: [format, clippy]
     strategy:
       matrix:
-        toolchain: [stable, beta]
+        toolchain: [stable]
         os: [ubuntu-latest, macos-latest]
     runs-on: ${{ matrix.os }}
     steps:
