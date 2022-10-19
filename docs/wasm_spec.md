@@ -175,6 +175,48 @@ branches can consume arguments, which are pushed back onto stack after unwinding
 
 because the `funcref` table can have varying function types, the callee is dynamically checked against the indexed function type, and may trap
 
+## Execution
+
+[(reference)][execution]
+
+### Values
+
+* `num ::= [i32|i64|f32|f64].const`
+* `vec ::= v128.const`
+* `ref ::= ref.null | ref funcaddr | ref.extern externaddr`
+* `val ::= num | vec | ref`
+
+each value type defaults to 0 or null
+
+*results* are either values or a trap
+
+### Store
+
+all global state manipulated by wasm
+
+### Addresses
+
+indexes into the "store" list
+
+addresses are **not** indices
+
+* address is dynamic, globally unique reference to runtime objects
+* indices are static, module-local references to their definition
+
+## Binary Encoding
+
+* integers are encoded using LEB128, variable length
+* floats are IEEE 754
+* names are UTF8
+* types are byte constants
+* tables are limits & reference type (func or extern)
+* globals are their value type, and a flag for mutability
+* instructions are byte constants
+* block instructions are structured, with both starting and ending bytes (e.g. `block instr* end`)
+* `section = section id | byte length | contents`
+* `module = magic (0asm) | version (1000) | sections*`
+
 [overview]: https://webassembly.github.io/spec/core/intro/overview.html
 [structure]: https://webassembly.github.io/spec/core/syntax/index.html
 [instructions]: https://webassembly.github.io/spec/core/syntax/instructions.html
+[execution]: https://webassembly.github.io/spec/core/exec/runtime.html
