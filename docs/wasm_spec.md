@@ -216,6 +216,15 @@ addresses are **not** indices
 * `section = section id | byte length | contents`
 * `module = magic (0asm) | version (1000) | sections*`
 
+## Text Format
+
+* `;;` line comments
+* `(; w/e ;)` block comments
+* indices can use symbolic form `$name`
+
+"folded" form with parenthesis offer multiple formats of identical instructions.
+e.g. `block label type instr* END` -> `(block label type instr*)`
+
 [overview]: https://webassembly.github.io/spec/core/intro/overview.html
 [structure]: https://webassembly.github.io/spec/core/syntax/index.html
 [instructions]: https://webassembly.github.io/spec/core/syntax/instructions.html
