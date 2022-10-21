@@ -1,5 +1,5 @@
 #![doc = include_str!("../README.md")]
-#![warn(missing_docs, clippy::all, clippy::pedantic, clippy::cargo)]
+#![warn(clippy::all, clippy::pedantic, clippy::cargo)]
 
 /// Binary format of wasm modules
 pub mod binary;

@@ -9,7 +9,7 @@ mod module_header {
     use wasmcrime::binary;
 
     #[test]
-    fn decode_minimal_module() {
+    fn decode_minimal() {
         let buf = encode_wat(
             r#"(module
                 (memory $memory 16)
@@ -21,16 +21,16 @@ mod module_header {
             ) "#,
         );
 
-        let mut decoder = binary::Decoder::new();
-        let _module = decoder.read(&buf).unwrap();
+        let decoder = binary::Decoder::new();
+        let _module = decoder.read_module_header(&buf).unwrap();
     }
 
     #[test]
-    fn decode_empty_module() {
+    fn decode_empty() {
         let buf = encode_wat(r#"(module)"#);
 
-        let mut decoder = binary::Decoder::new();
-        let _module = decoder.read(&buf).unwrap();
+        let decoder = binary::Decoder::new();
+        let _module = decoder.read_module_header(&buf).unwrap();
     }
 
     #[test]
@@ -38,8 +38,8 @@ mod module_header {
         let mut buf = encode_wat(r#"(module)"#);
         buf[2] = buf[2].wrapping_add(1);
 
-        let mut decoder = binary::Decoder::new();
-        let module = decoder.read(&buf);
+        let decoder = binary::Decoder::new();
+        let module = decoder.read_module_header(&buf);
         assert!(matches!(module, Err(wasmcrime::Error::Invalid(_))));
     }
 
@@ -47,8 +47,8 @@ mod module_header {
     fn fail_decode_incomplete() {
         let buf = encode_wat(r#"(module)"#);
 
-        let mut decoder = binary::Decoder::new();
-        let module = decoder.read(&buf[..3]);
+        let decoder = binary::Decoder::new();
+        let module = decoder.read_module_header(&buf[..3]);
         assert!(matches!(module, Err(wasmcrime::Error::Incomplete(_))));
     }
 }
