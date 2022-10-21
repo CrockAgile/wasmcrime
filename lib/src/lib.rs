@@ -16,7 +16,10 @@ pub fn init() {
 pub enum Error {
     /// Incomplete bytes when decoding
     #[error("incomplete bytes when decoding {0}")]
-    Incomplete(String),
+    Incomplete(&'static str),
+    /// Invalid bytes when decoding
+    #[error("invalid bytes when decoding {0}")]
+    Invalid(&'static str),
 }
 
 /// Crate wide result type
